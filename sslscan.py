@@ -5,10 +5,12 @@ import argparse
 import logging
 import warnings
 import concurrent.futures
-from datetime import datetime                              import time
+from datetime import datetime
+import time
 import re
 import hashlib
-import ipaddress                                           import json
+import ipaddress
+import json
 import gzip
 import base64
 from urllib.parse import urlparse
@@ -92,8 +94,10 @@ def check_tls_support(host, port):
                     # Verify actual protocol version for TLS 1.3
                     if proto == 'TLSv1.3':
                         if hasattr(ssock, 'version'):
-                            if ssock.version() != 'TLSv1.3':
-                                raise ssl.SSLError("Not TLS 1.3")
+                            version = ssock.version()
+                            if version != 'TLSv1.3':
+                                logger.debug(f"Expected TLSv1.3 but got {version}")
+                                raise ssl.SSLError(f"Not TLS 1.3 (actual: {version})")
                     results[proto] = True
         except Exception as e:
             logger.debug(f"Protocol {proto} failed: {str(e)}")
@@ -219,7 +223,6 @@ def get_public_key_info(der_cert):
     """Extract public key information from certificate"""
     try:
         # Fallback to basic key info extraction
-        import re
         cert_text = ssl.DER_cert_to_PEM_cert(der_cert)
 
         # Extract key size and type
@@ -647,7 +650,7 @@ def print_cipher_results(results):
         if not group:
             continue
 
-        print(f"\n{colorize(group_name.upper(), 'MAGENTA')}")
+        print(f"\n{colorize(group_name.upper(), "MAGENTA")}")
         for cipher, supported in group:
             symbol = colorize("✓", "GREEN") if supported else colorize("✗", "RED")
             cipher_name = colorize(cipher, "GREEN" if supported else "RED")
