@@ -25,7 +25,7 @@ A lightweight Python script to scan SSL/TLS configurations on remote servers. Wo
 ```bash
 sudo apt update
 sudo apt install python3 python3-pip
-git clone https://github.com/yourusername/ssl-scanner.git
+git clone [https://github.com/yourusername/ssl-scanner.git](https://github.com/uf46yr/SSLScan)
 cd ssl-scanner
 ```
 
@@ -33,7 +33,7 @@ cd ssl-scanner
 ```bash
 pkg update
 pkg install python openssl git
-git clone https://github.com/yourusername/ssl-scanner.git
+git clone [https://github.com/yourusername/ssl-scanner.git](https://github.com/uf46yr/SSLScan)
 cd ssl-scanner
 ```
 
